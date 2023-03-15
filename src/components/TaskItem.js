@@ -6,8 +6,10 @@ export const TaskItem = ({
     taskId,
 }) => {
     useEffect(() => {
+        //works when we create new task or render component
         console.log('Mount');
         return () => {
+            // works when we remove task
             console.log('Unmount');
         }
     },[])
