@@ -11,6 +11,9 @@ function App() {
     {_id:2,taskTitle:'second'},
     {_id:3,taskTitle:'third'},
   ]);
+
+
+  //is this handler function
 const addNewTaskHandler=(newTask)=>{
   setAllTasks(state=>[
     ...state,
@@ -18,6 +21,10 @@ const addNewTaskHandler=(newTask)=>{
       _id:state[state.length - 1]._id+1,
       taskTitle: newTask,
     }]);
+};
+
+const taskDelHandler=(taskId)=>{
+setAllTasks(state => state.filter(x=> x._id !== taskId))
 }
 
   return (
@@ -26,7 +33,9 @@ const addNewTaskHandler=(newTask)=>{
         <h1>ToDo App</h1>
       </header>
       <main>
-        <TaskList allTasks={allTasks}/>
+        <TaskList 
+        allTasks={allTasks}
+        taskDelHandler={taskDelHandler}/>
         <CreateTask addNewTaskHandler={addNewTaskHandler} />
       </main>
     </div>

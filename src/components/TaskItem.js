@@ -1,5 +1,12 @@
-export const TaskItem = ({ taskTitle }) => {
+export const TaskItem = ({ 
+    taskTitle,
+    taskDelHandler,
+    taskId,
+ }) => {
     return (
-        <li>{taskTitle}</li>
+        <li>
+            {taskTitle}
+            <button onClick={()=>taskDelHandler(taskId)}>x</button>
+            </li>
     );
 };
