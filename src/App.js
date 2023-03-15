@@ -3,16 +3,31 @@ import './App.css';
 import { TaskList } from './components/TaskList';
 import styles from './App.module.css'
 import { CreateTask } from './components/CreateTask';
+import { useState } from 'react';
 
 function App() {
+  const [allTasks,setAllTasks]=useState([
+    {_id:1, taskTitle:'first'},
+    {_id:2,taskTitle:'second'},
+    {_id:3,taskTitle:'third'},
+  ]);
+const addNewTaskHandler=(newTask)=>{
+  setAllTasks(state=>[
+    ...state,
+    {
+      _id:state[state.length - 1]._id+1,
+      taskTitle: newTask,
+    }]);
+}
+
   return (
     <div className={styles['site-wrapper']}>
       <header>
         <h1>ToDo App</h1>
       </header>
       <main>
-        <TaskList />
-        <CreateTask />
+        <TaskList allTasks={allTasks}/>
+        <CreateTask addNewTaskHandler={addNewTaskHandler} />
       </main>
     </div>
 
