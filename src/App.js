@@ -5,7 +5,7 @@ import { TaskList } from './components/TaskList';
 import styles from './App.module.css'
 import { CreateTask } from './components/CreateTask';
 // import { useState, useEffect } from 'react';
-import { useFetch} from './hooks/useFetch';
+import { useFetch } from './hooks/useFetch';
 
 function App() {
 
@@ -22,7 +22,7 @@ function App() {
   //     setAllTasks(Object.values(result))
   //   })
   // },[]);
-  const [allTasks,setAllTasks] = useFetch(`http://localhost:3030/jsonstore/todos`, [])
+  const [allTasks, setAllTasks, isLoading] = useFetch(`http://localhost:3030/jsonstore/todos`, [])
 
   //is this handler function
   const addNewTaskHandler = (newTask) => {
@@ -43,10 +43,16 @@ function App() {
       <header>
         <h1>ToDo App</h1>
       </header>
+
       <main>
-        <TaskList
-          allTasks={allTasks}
-          taskDelHandler={taskDelHandler} />
+
+        {isLoading ?
+          <p>Loading...</p> :
+          <TaskList
+            allTasks={allTasks}
+            taskDelHandler={taskDelHandler}
+          />}
+
         <CreateTask addNewTaskHandler={addNewTaskHandler} />
       </main>
     </div>
