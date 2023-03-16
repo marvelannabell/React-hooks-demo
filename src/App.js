@@ -6,6 +6,7 @@ import styles from './App.module.css'
 import { CreateTask } from './components/CreateTask';
 // import { useState, useEffect } from 'react';
 import { useFetch } from './hooks/useFetch';
+import { useApi } from './hooks/useApi'
 
 function App() {
 
@@ -22,7 +23,8 @@ function App() {
   //     setAllTasks(Object.values(result))
   //   })
   // },[]);
-  const [allTasks, setAllTasks, isLoading] = useFetch(`http://localhost:3030/jsonstore/todos`, [])
+  const [allTasks, setAllTasks, isLoading] = useFetch(`http://localhost:3030/jsonstore/todos`, []);
+  const { delTodo } = useApi()
 
   //is this handler function
   const addNewTaskHandler = (newTask) => {
@@ -34,8 +36,29 @@ function App() {
       }]);
   };
 
-  const taskDelHandler = (taskId) => {
+  const taskDelHandler = async (taskId) => {
+    // I. use await
+    // 1.Delete item from server
+    const deletedTodo = await delTodo(taskId)
+
+    // 2.Delete item from state
     setAllTasks(state => state.filter(x => x._id !== taskId))
+
+    // II.Use promise/then
+
+    // // 1.Delete item from server
+    // delTodo(taskId)
+    //   .then(() => {
+    //     // 2.Delete item from state
+    //     setAllTasks(state => state.filter(x => x._id !== taskId))
+    //   })
+
+    // // 1.Delete item from server
+    // delTodo(taskId)
+    //   .then(result => {
+    //     // 2.Delete item from state
+    //     setAllTasks(state => state.filter(x => x._id !== taskId))
+    //   })
   }
 
   return (
